@@ -1,0 +1,147 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             Int      @id @default(autoincrement())
+  email          String   @unique
+  password       String
+  firstName      String?
+  lastName       String?
+  pronouns       String?
+  jobTitle       String?
+  workplace      String?
+  profilePicture String?
+  bannerPicture  String?
+  bio            String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  // Relationships
+  EventPosts      Event[]      @relation("post_author")
+  CampaignPosts   Campaign[]   @relation("post_author")
+  DiscussionPosts Discussion[] @relation("post_author")
+  Comments        Comment[]    @relation("comment_author")
+
+  sentMessages     Message[] @relation("message_sender")
+  receivedMessages Message[] @relation("message_receiver")
+  likes            Like[]    @relation("userId")
+
+  eventsRSVPd EventRSVP[] @relation("user_event_rsvp")
+}
+
+enum Privileges {
+  ADMIN
+  USER
+}
+
+model Event {
+  id          Int       @id @default(autoincrement())
+  authorId    Int
+  title       String
+  description String
+  location    String?
+  longitude   Float?
+  latitude    Float?
+  timeToMeet  DateTime?
+
+  // Relationships
+  author    User        @relation("post_author", fields: [authorId], references: [id])
+  attendees EventRSVP[] @relation("event_user_rsvp")
+  likes     Like[]      @relation("event_likes")
+}
+
+model Campaign {
+  id           Int    @id @default(autoincrement())
+  authorId     Int
+  title        String
+  description  String
+  interactLink String
+  clickCount   Int    @default(0)
+  datePosted   DateTime
+
+  // Relationships
+  author User   @relation("post_author", fields: [authorId], references: [id])
+  likes  Like[] @relation("campaign_likes")
+}
+
+model Discussion {
+  id       Int    @id @default(autoincrement())
+  title    String
+  authorId Int
+
+  // Relationships
+  author   User      @relation("post_author", fields: [authorId], references: [id])
+  Comments Comment[]
+  likes    Like[]    @relation("discussion_likes")
+
+  @@unique([authorId])
+}
+
+
+model EventRSVP {
+  id      Int @id @default(autoincrement())
+  userId  Int
+  eventId Int
+
+  // Relationships
+  user  User  @relation("user_event_rsvp", fields: [userId], references: [id])
+  event Event @relation("event_user_rsvp", fields: [eventId], references: [id])
+
+  @@unique([userId, eventId])
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  postId    Int
+  authorId  Int
+  content   String
+  createdAt DateTime @default(now())
+
+  // Relationships
+  DiscussionPost Discussion @relation(fields: [postId], references: [id])
+  author         User       @relation("comment_author", fields: [authorId], references: [id])
+  likes          Like[]     @relation("comment_likes")
+
+  @@unique([authorId, postId])
+}
+
+model Message {
+  id         Int      @id @default(autoincrement())
+  senderId   Int
+  receiverId Int
+  content    String
+  createdAt  DateTime @default(now())
+
+  // Relationships
+  sender   User @relation("message_sender", fields: [senderId], references: [id])
+  receiver User @relation("message_receiver", fields: [receiverId], references: [id])
+}
+
+model Like {
+  id           Int  @id @default(autoincrement())
+  userId       Int
+  eventId      Int?
+  campaignId   Int?
+  discussionId Int?
+  commentId    Int?
+
+  // Relationships
+  user       User        @relation("userId", fields: [userId], references: [id])
+  event      Event?      @relation("event_likes", fields: [eventId], references: [id])
+  campaign   Campaign?   @relation("campaign_likes", fields: [campaignId], references: [id])
+  discussion Discussion? @relation("discussion_likes", fields: [discussionId], references: [id])
+  comment    Comment?    @relation("comment_likes", fields: [commentId], references: [id])
+
+  @@unique([userId, eventId])
+  @@unique([userId, campaignId])
+  @@unique([userId, discussionId])
+}
