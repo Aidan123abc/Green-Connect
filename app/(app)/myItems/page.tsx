@@ -17,7 +17,7 @@ export default async function MyItems() {
         <div>
                 <DashProfile />
         </div>
-        <div className="w-[90%] px-50px mt-4">
+        <div className="w-[60%] px-50px mt-4 mr-4 ml-2">
           <DashScroll personal={true} email={email}/>
         </div>
       </div>

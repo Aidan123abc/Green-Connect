@@ -3,21 +3,44 @@
 import React from "react";
 import SidebarElement from "../sidebarElement";
 import { usePathname } from 'next/navigation'
+import { useState, useEffect } from "react";
 
 export default function Sidebar() {
   const pathname = usePathname()
+
+  const [isOpen, setIsOpen] = useState(true);
+  const [accordionHeight, setAccordionHeight] = useState('h-full');
+
+  const toggleAccordion = () => {
+    setIsOpen(!isOpen);
+  };
+
+  useEffect(() => {
+    const calculateAccordionHeight = () => {
+      const itemHeight = 56; // Adjust this value based on your item height
+      const itemCount = sidebarData.length;
+      const maxHeight = itemCount * itemHeight;
+      setAccordionHeight(isOpen ? `h-${maxHeight}` : 'h-12');
+    };
+
+    calculateAccordionHeight();
+  }, [isOpen]);
 
   return (
     <>
       <aside
         id="default-sidebar"
-        className="bg-white mx-2 mt-4 rounded-lg"
+        className={`bg-white mx-2 mt-4 rounded-lg ${accordionHeight}`}
         aria-label="Sidebar"
       >
-        <div className="h-full py-4 overflow-y-auto">
-          <div className="font-bold font-large flex justify-center text-[#1E2A78]"> Explore Navigation </div>
+        <div className="py-2 overflow-y-auto">
+          <div className="font-bold font-large flex justify-center text-[#1E2A78]">
+            <button className="focus:outline-none" onClick={toggleAccordion}>
+              Explore Navigation
+            </button>
+          </div>
           <hr className="my-4 border-t border-indigo-800 mx-2"></hr>
-          <ul className="space-y-2 font-medium">
+          <ul className={`space-y-2 font-medium ${isOpen ? '' : 'hidden'}`}>
             {sidebarData.map((item, index) => (
               <SidebarElement
                 key={index}

@@ -36,9 +36,9 @@ export const Form = () => {
   return (
     <form onSubmit={onSubmit} className="space-y-12 w-full sm:w-[400px]">
       <div className="grid w-full items-center gap-1.5">
-        <Label htmlFor="email">Email</Label>
+        <Label htmlFor="email" className='text-white sm:text-black'>Email</Label>
         <Input
-          className="w-full"
+          className="w-full bg-white"
           required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -47,9 +47,9 @@ export const Form = () => {
         />
       </div>
       <div className="grid w-full items-center gap-1.5">
-        <Label htmlFor="password">Password</Label>
+        <Label htmlFor="password" className='text-white sm:text-black'>Password</Label>
         <Input
-          className="w-full"
+          className="w-full bg-white"
           required
           value={password}
           onChange={(e) => setPassword(e.target.value)}

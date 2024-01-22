@@ -5,9 +5,9 @@ export default function LoginPage() {
   return (
     <div className="h-screen w-screen flex justify-center items-center bg-green-800">
       <div className="sm:shadow-xl px-8 pb-8 pt-12 sm:bg-gray-100 rounded-xl space-y-12">
-        <h1 className="font-semibold text-2xl text-centered">Green-Connect</h1>
+        <h1 className="font-semibold text-2xl text-centered text-white sm:text-black">Green-Connect</h1>
         <LoginForm />
-        <p className="text-center">
+        <p className="text-center text-white sm:text-black">
           Need to create an account?{' '}
           <Link className="text-indigo-500 hover:underline" href="/register">
             Create Account
