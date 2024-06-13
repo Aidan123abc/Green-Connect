@@ -1,4 +1,20 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Introduction
+Green-Connect is my first attempt at an independent full-stack web-app. The app is built to be a social community-based platform for members to discuss environmental concerns, needs, and projects. Any community member will have the ability to post an 
+- Event --> Any person or virtual events with locations and times. Examples include "Cleaning up Garbage in Local Park", or "____ non-profit internship fair" 
+- Discussion --> Reddit-style discussions about local community issues where other members can interact and add to the post. Examples include "Storm water overflow? Is anyone else noticing this?" or a "Does anyone have experience with gardening in ____" 
+- Campaign --> Change.org style sheets where users can add their signature to a movement, localizing support for important issues
+
+## Tech Stack
+This app uses a Next JS app directory model
+
+The front end is coded with Typescript React and tailwindCSS
+
+The backend utilizes a Prisma ORM on a PostgreSQL database
+
+## Development Notes
+The project is still unfinished! 
+
+I have run into some design issues and am still figuring out what I want this app to be!
 
 ## Getting Started
 
