@@ -4,6 +4,8 @@ Green-Connect is my first attempt at an independent full-stack web-app. The app 
 - Discussion --> Reddit-style discussions about local community issues where other members can interact and add to the post. Examples include "Storm water overflow? Is anyone else noticing this?" or a "Does anyone have experience with gardening in ____" 
 - Campaign --> Change.org style sheets where users can add their signature to a movement, localizing support for important issues
 
+The goal of the app is to create a singular platform for environmental problems to be discussed and solved, and I hope one day to launch it to help people feel less alone when dealing with big environmental injustices and issues.
+
 ## Tech Stack
 This app uses a Next JS app directory model
 
